@@ -1,0 +1,79 @@
+Eterna v0.6 — Spécifications d’installation et de build locales
+À l’attention de Codex (Build Engineer)
+---------------------------------------------------------------
+
+1. Objectif général / General purpose
+FR : Eterna est une application IA locale tout-en-un intégrant génération d’image (Stable Diffusion XL), synthèse vocale (Coqui XTTS), reconnaissance vocale (Whisper) et compréhension du langage (LLaMA 3). L’objectif est d’offrir une expérience totalement hors-ligne, fluide et print-ready.
+EN : Eterna is an all-in-one local AI application integrating image generation (Stable Diffusion XL), voice synthesis (Coqui XTTS), speech recognition (Whisper), and language understanding (LLaMA 3). The goal is a fully offline, smooth, and print-ready experience.
+
+2. Architecture principale / Core architecture
+FR : L’application est modulaire et repose sur quatre composants majeurs : LLaMA (texte), Stable Diffusion XL (image), Coqui XTTS (voix), et Whisper (voix entrante). Tous communiquent via un pipeline interne contrôlé par Eterna Core.
+EN : The app is modular and relies on four main components: LLaMA (text), Stable Diffusion XL (image), Coqui XTTS (voice), and Whisper (input voice). They communicate through an internal pipeline controlled by Eterna Core.
+
+3. Configuration système / System configuration
+FR : Configuration de référence : Ryzen 7 5800X, RTX 3070 Ti (8 Go VRAM), 32 Go DDR4, NVMe 1 To, Windows 11 64 bits. CUDA 12.4, cuDNN 8.9, PyTorch 2.2.2 + TorchVision 0.17.2 + TorchAudio 2.2.2.
+EN : Reference setup: Ryzen 7 5800X, RTX 3070 Ti (8 GB VRAM), 32 GB DDR4, NVMe 1 TB, Windows 11 64-bit. CUDA 12.4, cuDNN 8.9, PyTorch 2.2.2 + TorchVision 0.17.2 + TorchAudio 2.2.2.
+
+4. Interface utilisateur / User interface
+FR : Interface sombre (WPF native) avec zone de chat, fond dynamique, logo Eternadream, bouton “Ouvrir un dossier (Créations images)” et fonction Drag & Drop universelle pour tout type de fichier.
+EN : Dark native WPF interface with chat zone, dynamic background, Eternadream logo, “Open Folder (Image Creations)” button, and universal Drag & Drop support for all file types.
+
+5. Fonctionnement / Core behavior
+FR : L’utilisateur interagit par texte ou voix. Eterna reformule via LLaMA, transmet au module concerné, reçoit le résultat, vérifie et restitue via interface + voix Coqui.
+EN : The user interacts by text or voice. Eterna reformulates through LLaMA, sends to the proper module, receives the result, validates it, and returns it through the interface and Coqui voice.
+
+6. Paramètres de génération d’images / Image generation parameters
+FR : Résolution print-ready 5200×5800 px, 300 DPI, une seule image à la fois, précision FP16, xFormers activé, VAE tiling, attention slicing.
+EN : Print-ready resolution 5200×5800 px, 300 DPI, single image at a time, FP16 precision, xFormers enabled, VAE tiling, attention slicing.
+
+7. Gestion des fichiers / File management
+FR : Sauvegarde automatique des créations dans le dossier “Creations”, logs dans “Logs”, configurations dans “Config”. Fichier principal : AppConfig.json.
+EN : Automatic saving of creations in “Creations”, logs in “Logs”, and configurations in “Config”. Main config file: AppConfig.json.
+
+8. Installation / Installer (.exe)
+FR : Installateur .exe autonome avec modèles intégrés. Chemin d’installation dynamique choisi par l’utilisateur (n’importe quel disque). Raccourci bureau et icône Eternadream inclus.
+EN : Standalone .exe installer with embedded models. Dynamic installation path chosen by the user (any drive). Includes desktop shortcut and Eternadream icon.
+
+9. Déplacement flexible / Portable installation
+FR : Eterna_Path.cfg contient le chemin d’installation (INSTALL_DIR). En cas de déplacement, l’utilisateur modifie ce fichier. L’application détecte le changement et met à jour automatiquement les chemins. Si des dossiers manquent, ils sont recréés au lancement.
+EN : Eterna_Path.cfg stores the installation path (INSTALL_DIR). If moved, the user edits this file. The app detects changes and updates all paths. Missing folders are rebuilt on startup.
+
+10. Répertoires / Folder structure
+FR : Structure : ${INSTALL_DIR}\Models, ${INSTALL_DIR}\Creations, ${INSTALL_DIR}\Logs, ${INSTALL_DIR}\Config.
+EN : Folder structure: ${INSTALL_DIR}\Models, ${INSTALL_DIR}\Creations, ${INSTALL_DIR}\Logs, ${INSTALL_DIR}\Config.
+
+11. Modules & modèles inclus / Bundled models
+FR : LLaMA 3 Q5_K_M, Stable Diffusion XL Base + Refiner + Turbo, Coqui XTTS v2, Whisper FR Large, ESRGAN (x4plus). Tous intégrés au setup et extraits dans ${INSTALL_DIR}\Models.
+EN : LLaMA 3 Q5_K_M, Stable Diffusion XL Base + Refiner + Turbo, Coqui XTTS v2, Whisper FR Large, ESRGAN (x4plus). All embedded in the installer and extracted into ${INSTALL_DIR}\Models.
+
+12. Liens de référence / Reference links
+FR : LLaMA 3 : https://huggingface.co/psuplj/Meta-Llama-3-8B-Q4_K_M-GGUF
+SDXL Base : https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+SDXL Refiner : https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0
+Coqui XTTS v2 : https://huggingface.co/coqui/XTTS-v2
+Whisper FR : https://huggingface.co/bofenghuang/whisper-large-v3-french
+EN : (same links)
+
+13. Checklist de build / Build checklist
+FR : 
+1. Intégrer tous les modèles dans le dossier setup.
+2. Ajouter variable INSTALL_DIR dynamique.
+3. Vérifier CUDA et Torch au lancement.
+4. Générer .exe statique avec raccourci.
+5. Test final GPU/CPU avant livraison.
+EN :
+1. Embed all models into setup folder.
+2. Add dynamic INSTALL_DIR variable.
+3. Verify CUDA and Torch at startup.
+4. Generate static .exe with shortcut.
+5. Final GPU/CPU test before release.
+
+14. Approbation utilisateur / User validation
+FR : ✅ Eterna v0.6 — Installation terminée avec succès. Tous les modules ont été installés localement. Utilisable hors ligne. Dossier : ${INSTALL_DIR}
+EN : ✅ Eterna v0.6 — Installation completed successfully. All modules installed locally. Fully offline. Directory: ${INSTALL_DIR}
+
+Signature finale / Final signature
+Eterna Project — Codex Build v0.6
+Généré le : 23 octobre 2025
+Auteur : Eterna (Eternadream Core)
+Statut : Version stable — Déploiement local complet
