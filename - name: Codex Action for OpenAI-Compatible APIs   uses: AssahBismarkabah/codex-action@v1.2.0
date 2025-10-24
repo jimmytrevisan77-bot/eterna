@@ -21,3 +21,6 @@ jobs:
           prompt: |
             Analyze the code changes in this commit or pull request.
             Detect potential bugs, suggest improvements, and explain unclear logic.
+git add .
+git commit -m "Test Codex reconnection"
+git push
